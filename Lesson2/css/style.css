@@ -1,0 +1,39 @@
+table {
+    /* width: 100%; */
+    border: 4px solid #000;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid lightgray;
+    width: 60px;
+    height: 60px;
+}
+
+.green
+{
+    background: green;
+    border-color: green;
+}
+
+tr:nth-child(n + 5):nth-child(-n + 8) td:first-child
+{
+    color: darkblue;
+    background: currentColor;
+    border-color: currentColor;
+}
+
+tr:nth-child(9) td:first-child,
+tr:nth-child(10) td:nth-child(2)
+{
+    color: brown;
+    background: currentColor;
+    border-color: currentColor;
+}
+
+[colspan="2"][rowspan="2"]
+{
+    color: lightblue;
+    background: currentColor;
+    border-color: currentColor;
+}
