@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple layout example</title>
+    <style>
+        table
+        {
+            border-collapse: collapse;
+        }
+
+        td
+        {
+            border: 1px solid black;
+        }
+
+        .logo
+        {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            text-align: center;
+        }
+
+        .header-menu
+        {
+            background: red;
+            text-align: center;
+        }
+
+        .news
+        {
+            background: brown;
+            height: 200px;
+            text-align: center;
+        }
+
+        .list
+        {
+            width: 200px;
+            background: orange;
+            text-align: center;
+        }
+
+        .nav
+        {
+            width: 100px;
+            background: black;
+            color: white;
+            text-align: center;
+        }
+
+        .footer
+        {
+            height: 100px;
+            background: orange;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr>
+                <td class="logo">LOGO</td>
+                <td class="header-menu" colspan="2">MENU</td>
+            </tr>
+            <tr>
+                <td class="news">NEWS FEED</td>
+                <td class="list">LIST</td>
+                <td class="nav" rowspan="2">BAR</td>
+            </tr>
+            <tr>
+                <td class="footer" colspan="2">FOOTER</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
