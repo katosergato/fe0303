@@ -1,43 +1,50 @@
 table {
+    /* width: 100%; */
     border: 1px solid #000;
     border-collapse: collapse;
-    
+    table-layout: fixed;
+    font-size: 52px;
 }
 
 td {
-    border: 2px solid rgb(235, 234, 234);
+    border: 1px solid rgb(0, 0, 0);
+    width: 60px;
+    height: 60px;
 }
 
+tr {
+    border: 1px solid rgb(0, 0, 0);
+    width: 60px;
+    height: 60px;
+}
 
-.orange1
+.orange
 {
     background: orange;
-    border-color:orange;
     text-align: center;
-    font-size: 20pt;
-    width: 80px;   height: 80px;
+    color: rgba(0, 0, 0, 0.705);
 }
 
 .red
 {
     background: red;
-    border-color:red;
     text-align: center;
-    font-size: 20pt; 
+    color: rgba(0, 0, 0, 0.705);
 }
 
 .brown
 {
-    background:brown;
-    border-color: brown;
+    background: brown;
     text-align: center;
-    font-size: 20pt;
+    color: white;
+   
 }
 
 .black
 {
     background: black;
-    border-color: black;
     text-align: center;
-    font-size: 20pt; 
+    color: white;
 }
+
+
