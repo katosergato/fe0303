@@ -9,20 +9,32 @@ git commit
 git commit
 ```
 
-- [ ] Ветвление в Git:
+- [x] Ветвление в Git:
 
 ```sh
-git ?
+git branch
+git checkout
 ```
 
-- [ ] Ветки и слияния:
+- [x] Ветки и слияния:
 
 ```sh
-git ?
+git branch
+git checkout
+git commit
+git checkout master
+git commit
+git merge
 ```
 
-- [ ] Git Rebase
+- [x] Git Rebase
 
 ```sh
-git ?
+git branch bugFix
+git checkout bugFix
+git commit
+git checkout master
+git commit
+git checkout bugFix
+git rebase master
 ```
