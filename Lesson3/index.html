@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-size: 10px;
+        }
+
+        .box
+        {
+            width: 30%;
+
+            /* 1vw = vieport-width / 100 */
+            /* 1vh = vieport-height / 100 */
+            /* 1em = 1 font-size */
+            /* 1rem = 1 font-size body/html */
+            /* 1% = 1 / 100 */
+
+            border: 20px solid black;
+            padding: 20px;
+
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 20px;
+
+            box-sizing: content-box;
+
+            font-size: 20px;
+        }
+
+        .inline
+        {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div>
+            <span>Element 1</span>
+            <span>Element 2</span>
+            <span>Element 3</span>
+        </div>
+        <p>Lorem ipsum</p>
+    </div>
+    <div class="box">
+        Element 2
+    </div>
+    <div class="box" style="box-sizing: border-box;">
+        <span>E</span>le<span>m</span>ent 3
+    </div>
+    <ul>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+    </ul>
+    <p>
+        Lorem ipsum
+        <span class="inline">dolor</span>
+        <em class="inline">sit</em>
+        <strong class="inline">amet</strong>,
+        consectetur adipisicing elit. Dolorum minus facere dolor atque quos nobis sint sit similique impedit rem? Perferendis, delectus laboriosam perspiciatis magnam aspernatur tenetur minima assumenda atque!
+    </p>
+    <a style="display: block;">Link to something</a>
+</body>
+</html>
