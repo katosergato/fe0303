@@ -1,0 +1,50 @@
+table {
+    /* width: 100%; */
+    border: 1px solid #000;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 52px;
+}
+
+td {
+    border: 1px solid rgb(0, 0, 0);
+    width: 60px;
+    height: 60px;
+}
+
+tr {
+    border: 1px solid rgb(0, 0, 0);
+    width: 60px;
+    height: 60px;
+}
+
+.orange
+{
+    background: orange;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.705);
+}
+
+.red
+{
+    background: red;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.705);
+}
+
+.brown
+{
+    background: brown;
+    text-align: center;
+    color: white;
+   
+}
+
+.black
+{
+    background: black;
+    text-align: center;
+    color: white;
+}
+
+
