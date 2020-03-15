@@ -9,6 +9,5 @@
 1. The Navigation bar should take `35%` width of top menu and height `450px`
 1. The footer should take all the free space under the Newsfeed and list, and have `150px` height
 1. (*) Stretch the grid vertically(Holy Grail problem), so the website will cover full viewport. Forget about the rule "List should have 300%", it should stretch to all available vertical space.
-1. (*) Every block should has text which are centered in the block
 
 Note: Pick some interesting colors from [Adobe Color CC](https://color.adobe.com/explore/?filter=most-popular&time=all) and make blocks colorful.

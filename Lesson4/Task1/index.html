@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Layout</title>
+    <style>
+        *
+        {
+            box-sizing: border-box;
+        }
+
+        .container
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .logo
+        {
+            background: orange;
+
+            flex-basis: 100px;
+            flex-shrink: 0;
+            flex-grow: 0;
+
+            height: 100px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu
+        {
+            background: red;
+            /* flex-basis: auto;
+            flex-grow: 1;
+            flex-shrink: 1; */
+            flex: 1 1 auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .square
+        {
+            /* V.1 */
+            flex-basis: 100;
+            flex-grow: 65;
+
+            /* V. 2 */
+            /* flex-grow: 0; */
+            /* flex-basis: calc( 65% + 35px); */
+
+            display: flex;
+            flex-direction: column;
+
+            /* height: 400px; */
+        }
+
+        .wrapper
+        {
+            flex: 1 1 auto;
+
+            display: flex;
+            flex-direction: row;
+        }
+
+        .news
+        {
+            flex: 0 0 100px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: brown;
+
+        }
+
+        .list
+        {
+            flex: 1 1 auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: orange;
+        }
+
+        .footer
+        {
+            flex: 0 0 100px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: orange;
+
+        }
+
+        .nav
+        {
+            /* V. 1 */
+            flex-basis: 0;
+            flex-grow: 35;
+
+            /* V. 2 */
+            /* flex-grow: 0; */
+            /* flex-basis: calc( 35% - 35px); */
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: black;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            Logo
+        </div>
+        <div class="menu">
+            Menu
+        </div>
+    </div>
+    <div class="container">
+        <div class="square">
+            <div class="wrapper">
+                <div class="news">
+                    NEWS
+                </div>
+                <div class="list">
+                    LIST
+                </div>
+            </div>
+            <div class="footer">
+                FOOTER
+            </div>
+        </div>
+        <div class="nav">
+            Nav
+        </div>
+    </div>
+</body>
+</html>
