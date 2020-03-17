@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Queries and Responsive images</title>
+
+    <style>
+        .wrapper
+        {
+            width: 90%;
+
+            margin: 0 auto;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            background: cornsilk;
+        }
+/* 0 + 30px + 0 + 30px + 0 + 30px + 0 = 90px */
+/* 1000px - 90px = 910px */
+/* 1 + 1 + 1 + 1 = 4 */
+/* 910px / 4 = 227.5px */
+
+/* 228px + 30px */
+/* 227px + 30px */
+/* 228px + 30px */
+/* 227px */
+
+        .block
+        {
+            position: relative;
+            /* width: 580px; */
+
+            flex-grow: 1;
+            flex-shrink: 0;
+            flex-basis: 0;
+
+            /* height: 650px; */
+
+            background: cadetblue;
+            margin-right: 30px;
+        }
+
+        @media (max-width: 880px) {
+            .wrapper
+            {
+                flex-wrap: wrap;
+            }
+
+            .block
+            {
+                flex-grow: 1;
+                flex-shrink: 0;
+                flex-basis: 40%;
+
+                margin-bottom: 30px;
+            }
+
+            /* .block:not(:nth-last-child(-n + 2))
+            {
+                margin-bottom: 30px;
+            } */
+
+            .block:nth-last-child(-n + 2)
+            {
+                margin-bottom: 0;
+            }
+
+            .block:nth-child(2n)
+            {
+                margin-right: 0;
+            }
+        }
+
+        .block:nth-child(2)
+        {
+            background-color: aqua;
+        }
+
+        .block:last-child
+        {
+            margin-right: 0;
+        }
+
+        .block__image
+        {
+            width: 100%;
+
+            display: block;
+        }
+
+        .block__text
+        {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            /* height: 166px; */
+            height: 25.53%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: rgba(209, 169, 84, 0.9);
+        }
+
+        /* @media (max-width: 780px) and (min-height: 10em) { */
+            /* width <= 780 */
+            /* descktop first */
+            /* body
+            {
+                background: red;
+            }
+        }
+
+        @media print, (min-width: 780px) { */
+            /* width >= 780 */
+            /* mobile first */
+            /* body
+            {
+                background: yellow;
+            }
+        } */
+
+        .container
+        {
+            width: 100%;
+            max-width: 754px;
+
+            margin: 0 auto;
+
+            display: flex;
+        }
+
+        .left
+        {
+            flex: 0 0 232px;
+            margin-right: 20px;
+
+            height: 200px;
+            background: red;
+        }
+
+        .right
+        {
+            flex: 1 1 auto;
+
+            height: 300px;
+            background: green;
+        }
+
+        @media (max-width: 600px) {
+            .container
+            {
+                display: block;
+            }
+
+            .left
+            {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+        </div>
+        <div class="right">
+        </div>
+    </div>
+
+
+    <div class="wrapper" style="display: none;">
+        <div class="block">
+            <!-- <img class="block__image" src="https://source.unsplash.com/collection/190727/580x650"> -->
+
+            <!-- screen 1000px * 2px => 2000px * 50% => 1000px http://srcset.salcode.com/images/1000x500.png   -->
+            <!-- screen 500px * 2px => 1000px * 50% => 500px http://srcset.salcode.com/images/500x250.png -->
+            <img
+                class="block__image"
+                alt=""
+                src="http://srcset.salcode.com/images/2000x1000.png"
+                srcset="
+                    http://srcset.salcode.com/images/500x250.png   500w,
+                    http://srcset.salcode.com/images/1000x500.png  1000w,
+                    http://srcset.salcode.com/images/1500x750.png  1500w,
+                    http://srcset.salcode.com/images/2000x1000.png 2000w,
+                    http://srcset.salcode.com/images/3000x1500.png 3000w"
+                sizes="(max-width: 880px) 50vw, (min-width: 880px) 25vw">
+
+            <div class="block__text">
+                корпоративы
+            </div>
+        </div>
+        <div class="block">
+            <img class="block__image" src="https://source.unsplash.com/collection/190727/580x650">
+            <div class="block__text">
+                корпоративы
+            </div>
+        </div>
+        <div class="block">
+            <img class="block__image" src="https://source.unsplash.com/collection/190727/580x650">
+            <div class="block__text">
+                корпоративы
+            </div>
+        </div>
+        <div class="block">
+            <img class="block__image" src="https://source.unsplash.com/collection/190727/580x650">
+            <div class="block__text">
+                корпоративы
+            </div>
+        </div>
+    </divdiv>
+
+    <!--
+        screen = 1000px * 2x => 2000px => http://srcset.salcode.com/images/2000x1000.png
+
+        screen = 800px * 2x => 1600px => http://srcset.salcode.com/images/1500x750.png
+
+        screen = 500px * 2x => 1000px => http://srcset.salcode.com/images/1000x500.png
+
+        screen = 320px * 2x => 640px => http://srcset.salcode.com/images/500x250.png
+
+     -->
+
+    <div hidden>
+        <img
+            class="srcset-demo-img"
+            alt=""
+            src="http://srcset.salcode.com/images/2000x1000.png"
+            srcset="
+                http://srcset.salcode.com/images/500x250.png   500w,
+                http://srcset.salcode.com/images/1000x500.png  1000w,
+                http://srcset.salcode.com/images/1500x750.png  1500w,
+                http://srcset.salcode.com/images/2000x1000.png 2000w,
+                http://srcset.salcode.com/images/3000x1500.png 3000w">
+
+    </div>
+
+
+</body>
+</html>
