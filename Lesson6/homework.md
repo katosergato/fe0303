@@ -1,6 +1,6 @@
 # JS Basic Homework
 
-- [ ] [Even or Odd](https://www.codewars.com/kata/even-or-odd): [Solution](#link)
+- [x] [Even or Odd](https://www.codewars.com/kata/even-or-odd): [Solution](https://www.codewars.com/kata/reviews/5425fedf430ca265ea00033e/groups/5e73d112ea7c9d00016e4ef2)
 - [ ] [Return Negative](https://www.codewars.com/kata/return-negative): [Solution](#link)
 - [ ] [Jenny's secret message](https://www.codewars.com/kata/jennys-secret-message): [Solution](#link)
 - [ ] [Opposites Attract](https://www.codewars.com/kata/opposites-attract): [Solution](#link)
