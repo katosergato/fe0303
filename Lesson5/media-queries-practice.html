@@ -7,6 +7,10 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Document</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         .block {
             margin-bottom: 10px;
         }
@@ -17,7 +21,7 @@
             height: 150px;
             color: #FFF;
             display: block;
-            width: 100%;
+            width: 100%;            
         }
 
         .inside {
@@ -34,19 +38,103 @@
             z-index: 1;
         }
 
-        /* ## From large Desktop */
-        @media (max-width: 1800px){
-            .third .colored {
-                flex: (0, 1, 75%);
-            }
+        .first,
+        .second,
+        .third,
+        .fourth,
+        .fifth {
+            display: flex;
+        }
+
+        .first .colored {
+            flex: 1 0 0;
+        }
+
+        .third .colored {
+            flex: 0 0 25%;
+        }
+
+        .fourth .colored .colored {
+            flex: 0 0 30%;
+        }
+
+        .fourth .colored:last-child {
+            flex-grow: 1;
+        }
+
+        /*From medium desktop to large desktop */
+        @media (max-width: 1800px) {
+
+        .first,
+        .third,
+        .fifth {
+            flex-wrap: wrap;
+        }
+
+        .first .colored {
+            flex-basis: 50%;
+        }
+
+        .third .colored {
+            flex: 1 0 50%;
+        }
+
+        .fourth .colored {
+            flex: 0 0 35%;
+        }
+
+        .fourth .colored:nth-child(2) {
+            flex-shrink: 1;
+        }
+
+        .fifth .colored {
+            flex: 0 0 33%;
+        }
+
+        .fifth {
+            justify-content: center;
+        }
+        }
+    
+       /*From Tablet Landscape to medium desktop*/
+        @media (max-width: 1200px) {
+
+        .third .colored {
+            flex: 1 0 0;
+        }
+
+        .fifth .colored {
+            flex: 1 0 50%;
+        }
+        }
+
+        /*From Tablet Portrait to Tablet Landscape*/
+        @media (max-width: 960px) {
+        
+        .third .colored {
+            flex: 0 0 100%; 
+        }
+
+        .fourth {
+            flex-wrap: wrap;
+        }
+
+        .fourth .colored {
+            flex: 1 0 50%;
+        }
         }
         
+         /*From Mobile to Tablet Portrait*/
+         @media (max-width: 768px) {
 
-    
+        .fourth .colored {
+            flex: 0 0 100%;
+        }
 
-
-
-        
+        .fifth .colored {
+            flex: 0 0 100%;
+        }
+        }               
     </style>
 </head>
 <body>
