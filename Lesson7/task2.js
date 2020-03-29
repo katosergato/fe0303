@@ -70,8 +70,7 @@ function getAverageGamer( grade ) {
 }
 
 function getLagging( grade ) {
-    const result = [],
-        avr = getAverageGrade(grade),
+    const avr = getAverageGrade(grade),
         gamerNames = Object.keys(grade);
 
     return gamerNames
@@ -86,7 +85,16 @@ function getLagging( grade ) {
         });
 }
 
+function getWinners( grade ) {
+    const gamerNames = Object.keys(grade);
+
+    return gamerNames
+        .sort((name1, name2) =>  grade[name2] - grade[name1])
+        .filter((name, idx) => idx < 3);
+}
+
 console.log('1. Leader:', getLeader(grade));
 console.log('3. Average Grade:', getAverageGrade(grade));
 console.log('4. Average Gamer:', getAverageGamer(grade));
 console.log('5. Lagging Gamer:', getLagging(grade));
+console.log('6. Get winners:', getWinners(grade));
