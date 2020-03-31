@@ -1,11 +1,32 @@
 // Написать функцию возведения числа в степень
-function pow(x, n) {
+// function pow(x, n) {
+//     let result = x; // x^1
 
+//     for (let i=2; i<=n; i++) {
+//         result = result*x;
+//     }
+
+//     return result;
+// }
+
+function pow(x, n) {
+    if (n === 0) {
+        return 1;
+    }
+
+    if (n === 1) {
+        return x;
+    }
+
+    return x * pow(x, n - 1);
 }
 
-console.log( pow(2, 3) === 8 );
+console.log( pow(+prompt('Get x', 2), +prompt('Get n', 3)) === 8 );
 console.log( pow(3, 3) === 27 );
 console.log( pow(10, 5) === 100000 );
+
+// pow(x, n) = x * pow(x, n - 1) = x * ( x * pow(x, n - 2) ) = x * x * (x * pow(x, n - 3))
+//  x**n =     x *    x**(n-1)
 
 /*
     Контекст выполнения – специальная внутренняя структура данных, которая содержит информацию о вызове функции.
@@ -23,8 +44,17 @@ console.log( pow(10, 5) === 100000 );
 
 
 // Написать функцию определения факториала числа
+// n! = (n-1)! * n
 function factorial(n) {
+    if (n === 0) {
+        return 1;
+    }
 
+    if (n <= 2) {
+        return n;
+    }
+
+    return factorial(n-1) * n;
 }
 
 console.log( factorial(0) === 1 );
@@ -33,3 +63,18 @@ console.log( factorial(2) === 2 );
 console.log( factorial(3) === 6 );
 console.log( factorial(4) === 24 );
 console.log( factorial(5) === 1*2*3*4*5 );
+
+// F(0) = 4;
+// F(1) = 12;
+// F(n) = F(n-1) + F(n-2)
+function fib(n) {
+    if (n === 0) {
+        return 4;
+    }
+
+    if (n === 1) {
+        return 12;
+    }
+
+    return fib(n-1) + fib(n-2);
+}

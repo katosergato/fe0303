@@ -131,12 +131,19 @@ const counter1 = makeCounterElement({
     title: 'До нового года осталось',
     data: getCountdownData( newYear )
 });
+const counter2 = makeCounterElement({
+    title: 'До нового года осталось',
+    data: getCountdownData( newYear )
+});
 
-render( counter1.container, rootEl );
+render( [counter1.container, counter2.container], rootEl );
 
 setInterval(
     function() {
         counter1.update({
+            data: getCountdownData( newYear )
+        });
+        counter2.update({
             data: getCountdownData( newYear )
         });
     },

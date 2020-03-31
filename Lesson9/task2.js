@@ -24,6 +24,20 @@ const company = {
   };
 
 function sumSalaries(department) {
+  if (Array.isArray(department)) {
+    return department.reduce(
+      (sum, {salary}) => sum + salary,
+      0
+    );
+  }
+
+  return subDepartments =
+    Object.values(department)
+      .map(dep => sumSalaries(dep))
+      .reduce(
+        (sum, salary) => sum + salary,
+        0
+      );
 }
 
-console.log( sumSalaries(company) ); // 6700
+console.log( sumSalaries(company) );
