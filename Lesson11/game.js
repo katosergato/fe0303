@@ -1,9 +1,23 @@
-function Game( board = Game.createRandomBoard() ) {
+function Game( props ) {
     // this = {}
     // this.__proto__ = Game.prototype;
 
-    this.board = board;
+    const {
+        board = Game.createRandomBoard(),
+        container
+    } = props;
 
+    this.container = container;
+    this.board = {};
+    this.isWin = false;
+
+    this.container.classList.add('board');
+
+    this.move = this.move.bind(this);
+
+    this.init(board);
+
+    document.addEventListener('keyup', this.keyUp.bind(this)); // keydown + keyup === keypress
     // return this;
 }
 
@@ -23,7 +37,7 @@ Game.converArrayToBoard = function converArrayToBoard( boardArray ) {
         },
         {}
     );
-};
+}
 Game.canBoardWin = function( board ) {
     let N = Math.ceil(board.findIndex(cell => cell === 'empty') / 4);
 
@@ -35,25 +49,81 @@ Game.canBoardWin = function( board ) {
 
     return N % 2 === 1;
 }
+Game.prototype.keyUp = function( event ) {
+    const key = event.key;
+    let direction, from;
 
-Game.prototype.render = function render() {
-    console.log('--- board ---');
-    for (let row=0; row < 4; row++) {
-        let rowStr = '';
-
-        for (let col=0; col < 4; col++) {
-            const el = this.board[col + row*4];
-
-            if ( el === 'empty') {
-                rowStr += 'ee ';
-            } else {
-                rowStr += el.toString().padStart(2, '0') + ' ';
-            }
-        }
-
-        console.log(rowStr);
+    switch (key) {
+        case 'ArrowUp':
+        case 'w':
+            direction = 'TOP';
+            from = 'BOTTOM';
+            break;
+        case 'ArrowDown':
+        case 's':
+            direction = 'DOWN';
+            from = 'TOP';
+            break;
+        case 'ArrowLeft':
+        case 'a':
+            direction = 'LEFT';
+            from = 'RIGHT';
+            break;
+        case 'ArrowRight':
+        case 'd':
+            direction = 'RIGHT';
+            from = 'LEFT';
     }
-    console.log('--- board ---');
+
+    const emptyIndex = this.getIndex('empty'),
+        siblings = this.getSiblingsIndex(emptyIndex);
+
+    if (siblings[from] >= 0) {
+        this.move( this.board[ siblings[from] ] );
+    }
+
+    // console.log( {siblings, direction, from} );
+}
+
+Game.prototype.init = function init(board) {
+    const cells = [];
+
+    for (let i=0; i<=15; i++) {
+        const number = board[i];
+
+        if (number !== 'empty') {
+            const cell = new Cell({
+                number,
+                onMove: this.move
+            });
+
+            this.board[i] = cell;
+            cells.push( cell.element );
+        } else {
+            this.board[i] = number;
+        }
+    }
+
+    this.render();
+    render( cells, this.container);
+}
+Game.prototype.getPosition = function getPosition(index) {
+    return {
+        row: Math.floor( index / 4 ),
+        cell: index % 4
+    }
+}
+Game.prototype.render = function render() {
+    for (let i=0; i<=15; i++) {
+        const cell = this.board[i];
+
+        if (cell !== 'empty') {
+            cell.changeProps({
+                canMove: !!this.getMoveData(cell.props.number),
+                position: this.getPosition(i)
+            });
+        }
+    }
 }
 Game.prototype.getMoveData = function canMove( number ) {
     if ( number === 'empty') {
@@ -90,50 +160,41 @@ Game.prototype.getSiblingsIndex = function getSiblingsIndex( currentIndex ) {
 }
 Game.prototype.getIndex = function getIndex( number ) {
     for (let index = 0; index < 16; index++) {
-        if (this.board[index] === number) {
+        if (this.board[index] === 'empty') {
+            if (number === 'empty') {
+                return index;
+            }
+        } else if (this.board[index].props.number === number) {
             return index;
         }
     }
 }
 Game.prototype.checkWin = function checkWin() {
     return Game.START_BOARD
-        .every((number, index) => this.board[index] === number);
+        .every((number, index) => this.board[index] !== 'empty' ? this.board[index].props.number === number : this.board[index] === number);
 }
-Game.prototype.move = function move( number ) {
-    const moveData = this.getMoveData( number );
+Game.prototype.move = function move( cell ) {
+    if (this.isWin) {
+        return ;
+    }
+
+    const moveData = this.getMoveData( cell.props.number );
 
     if (moveData) {
-        this.board[moveData.to] = number;
+        this.board[moveData.to] = cell;
         this.board[moveData.from] = 'empty';
     }
 
+    this.render();
+
     if (this.checkWin()) {
         this.win();
-    } else {
-        this.render();
     }
 }
 Game.prototype.win = function win() {
+    this.isWin = true;
     console.log('You win!');
 }
 // Game.prototype.constructor = Game;
 
-const startBoard = Game.createRandomBoard();
-const game = new Game( startBoard );
-
-console.log( game );
-
-game.render(); // this = board
-
-console.log(
-    Game.START_BOARD.map(
-        number => ({
-            number,
-            index: game.getIndex(number),
-            canMove: game.getMoveData(number)
-        })
-    )
-);
-
-console.log( Game.canBoardWin([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 'empty', 15]), true );
-console.log( Game.canBoardWin([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 14, 13, 'empty']), false );
+console.dir( Game );
