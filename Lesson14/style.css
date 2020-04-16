@@ -1,0 +1,95 @@
+html
+{
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+
+    min-height: 100%;
+}
+
+.loginform
+{
+    width: 100%;
+    max-width: 300px;
+
+    border: 1px solid #000;
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    font-size: 1.2em;
+}
+
+.loginform__body
+{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 16px;
+}
+
+.loginform__row
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.loginform__row + .loginform__row
+{
+    margin-top: 12px;
+}
+
+.loginform__row--active .loginform__label
+{
+    transform: translateY(0);
+    color: #000;
+}
+
+.loginform__row--error,
+.loginform__row--error .loginform__label {
+    color: red;
+}
+
+.loginform__label
+{
+    display: block;
+    padding-left: 16px;
+    transform: translateY(50%) translateY(14px) translateY(0.6em);
+    color: rgb(207, 206, 206);
+    margin-bottom: 4px;
+
+    transition: all .3s ease-in;
+    will-change: transform, color;
+}
+
+.loginform__input-error
+{
+    display: block;
+    margin-top: 4px;
+}
+
+.loginform__input
+{
+    display: block;
+    padding: 8px 12px;
+
+    font-size: inherit;
+}
+
+.loginform__action
+{
+    display: block;
+
+    width: 100%;
+    padding: 12px;
+    background: rgb(221, 250, 58);
+    border: 0;
+    margin: 0;
+
+    font-size: inherit;
+}
