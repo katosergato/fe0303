@@ -1,0 +1,164 @@
+* {
+    box-sizing: border-box;
+}
+
+body
+{
+    margin: 0;
+
+    font-family: Montserrat, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.nav
+{
+    position: absolute;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    height: 100px;
+    border-bottom: 1px solid #A1A1A1;
+}
+
+.nav__list
+{
+    position: relative;
+
+    width: 100%;
+    max-width: 1113px;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav__item-active
+{
+    width: 1px;
+    height: 2px;
+    background: #FFFFFF;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    transform-origin: 0 0;
+    transition: all .2s ease-in;
+    will-change: left, transform;
+}
+
+
+.nav__item
+{
+    display: flex;
+    align-items: stretch;
+}
+
+.nav__link
+{
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+}
+
+.nav__link:hover
+{
+    background: rgba(0, 0, 0, 0.4);
+    /* border-color: #FFFFFF; */
+}
+
+.nav__link--active
+{
+    /* border-color: #FFFFFF; */
+}
+
+.section
+{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.first-screen
+{
+    height: 100vh;
+    max-height: 900px;
+    background: url('img/Rectangle.jpg') center center no-repeat;
+    background-size: cover;
+}
+
+.first-screen__body
+{
+    width: 100%;
+    max-width: 830px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.first-screen__company-name
+{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+
+    text-align: center;
+
+    color: #FFFFFF;
+
+    margin: 0 0 20px;
+    padding: 0;
+}
+
+.first-screen__title
+{
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 64px;
+    text-align: center;
+
+    color: #FFFFFF;
+
+    margin: 0 0 50px;
+}
+
+.action
+{
+    display: block;
+    padding: 15px 36px;
+
+
+    background: #4985FF;
+    box-shadow: 0px 0px 10px rgba(111, 111, 111, 0.25);
+    border-radius: 30px;
+
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background .4s ease-in;
+}
+
+.action:hover
+{
+    background: #1d52be;
+}
+
+.action:focus
+{
+    outline: none;
+    box-shadow: 0px 0px 10px rgba(111, 111, 111, 0.25), 0px 0px 4px rgba(255, 255, 255, 1);
+}
