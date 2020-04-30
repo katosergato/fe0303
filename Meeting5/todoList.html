@@ -14,6 +14,7 @@
 </head>
 <body>
     <section class="todoapp">
+        <div class="loader"><span class="loader__body"></span></div>
         <h1>todos</h1>
         <form class="header">
             <label class="complete-all-label">
@@ -30,6 +31,11 @@
                 autofocus=""
                 name="task"
                 aria-label="What needs to be done?">
+            <input
+                class="deadline"
+                placeholder="deadline"
+                name="deadline"
+                type="date">
             <button class="visually-hidden" type="submit">Добавить</button>
         </form>
         <section class="main">

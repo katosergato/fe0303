@@ -3,6 +3,7 @@ function Task(props) {
         id,
         completed = false,
         text,
+        deadline,
         isEdit = false,
         hidden = false
     } = props;
@@ -13,7 +14,8 @@ function Task(props) {
     this.task = {
         id,
         completed,
-        text
+        text,
+        deadline
     };
     this._clickCount = 0;
     this.createElement();
@@ -25,12 +27,13 @@ Task.prototype.createElement = function () {
             type: "checkbox"
         }),
         taskText = createElement('span', {}, this.task.text),
+        deadline = createElement('span', {}, `(${this.task.deadline.split('T')[0]})`),
         destroyBtn = createElement('button', {
             className: 'destroy'
         }),
         viewEl = createElement('div', {
             className: 'view',
-            children: [completeEl, taskText, destroyBtn]
+            children: [completeEl, taskText, deadline, destroyBtn]
         }),
         editEl = createElement('input', {
             className: "edit",
@@ -86,6 +89,7 @@ Task.prototype.changeTask = function(e) {
     this.isEdit = false;
 
     this.render();
+    this.props.onTaskChange(this);
 }
 
 Task.prototype.dbClick = function dbClick(e) {
@@ -122,11 +126,31 @@ Task.prototype.render = function () {
 
 Task.prototype.updateProps = function (newProps) {
     const {
-        hidden
+        hidden,
     } = newProps;
+    let taskChanged = false;
 
     if (hidden !== this.hidden) {
         this.hidden = hidden;
+        taskChanged = true;
+    }
+
+    ['id', 'completed', 'text'].forEach(key => {
+        if (key in newProps && newProps[key] !== this.task[key]) {
+            this.task[key] = newProps[key];
+            taskChanged = true;
+        }
+    });
+
+    if (taskChanged) {
         this.render();
     }
 }
+
+Task.prototype.isViewedAndUncompleted = function() {
+    return !this.hidden && !this.task.completed; // this.hidden === false && this.task.completed === false
+}
+
+//                              this.hidden === false       vs     !this.hidden
+// if this.hidden is false  =>  false       === false => true   => !false
+// this.hidden is true      =>  true        === false => false  => !true

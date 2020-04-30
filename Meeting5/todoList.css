@@ -396,3 +396,77 @@ html .clear-completed:active {
 	overflow: hidden;
 	margin: -1px;
 }
+
+.loader
+{
+	position: fixed;
+
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	display: none;
+	background: rgba(0, 0, 0, 0.4);
+
+	z-index: 9;
+}
+
+.loader--active {
+	display: block;
+}
+
+.loader__body
+{
+	position: absolute;
+
+	top: 50%;
+	left: 50%;
+
+	animation: rotate-loader 7s linear 0s infinite;
+}
+
+.loader__body::before,
+.loader__body::after
+{
+	content: '';
+	display: block;
+
+	position: absolute;
+
+	top: 0;
+	left: 0;
+
+	width: 16px;
+	height: 16px;
+
+	border-radius: 50%;
+
+	background: rgb(255, 0, 0);
+	transform-origin: 50% 50%;
+	transform: translateX(-50%) translateY(-50%) translateX(20px) translateY(20px);
+}
+
+.loader__body::after
+{
+	background: rgb(0,0,255);
+	transform: translateX(-50%) translateY(-50%) translateX(-20px) translateY(-20px);
+}
+
+@keyframes rotate-loader {
+	from {
+		transform: rotate(0) scale(1);
+	}
+	25% {
+		transform: rotate(630deg) scale(2);
+	}
+	50% {
+		transform: rotate(1260deg) scale(1);
+	}
+	75% {
+		transform: rotate(1890deg) scale(0.5);
+	}
+	to {
+		transform: rotate(2520deg) scale(1);
+	}
+}

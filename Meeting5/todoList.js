@@ -16,17 +16,21 @@ function TodoList(props) {
 }
 
 TodoList.prototype.getTasks = function() {
+    this.props.beforeFetch();
     fetch(this.props.tasksGetUrl)
         .then(response => response.json())
         .then(tasks => {
             this.tasks = tasks.map(task => this.createTask(task));
             this.render();
-        });
+        })
+        .then(this.props.onTasksUpdate)
+        .then(this.props.afterFetch);
 }
 
 TodoList.prototype.createTaskOnServer = function(task) {
     const currentTime = new Date();
 
+    this.props.beforeFetch();
     fetch(this.props.tasksGetUrl, {
         method: 'POST',
         headers: {
@@ -37,7 +41,9 @@ TodoList.prototype.createTaskOnServer = function(task) {
             createdAt: currentTime.toJSON()
         })
     }).then(response => response.json())
-    .then(task => this.addTask(task));
+    .then(task => this.addTask(task))
+    .then(this.props.onTasksUpdate)
+    .then(this.props.afterFetch);
 }
 
 TodoList.prototype.isTaskHidden = function(taskCompleted, filter) {
@@ -61,8 +67,14 @@ TodoList.prototype.createTask = function(task) {
 }
 
 TodoList.prototype.destroyTask = function(taskObj) {
-    this.tasks = this.tasks.filter(task => task !== taskObj);
-    filter.updateProps({ itemsCount: todoList.getLength() });
+    this.props.beforeFetch();
+    fetch(`${this.props.tasksGetUrl}/${taskObj.task.id}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(() => this.tasks = this.tasks.filter(task => task !== taskObj))
+    .then(this.props.onTasksUpdate)
+    .then(this.props.afterFetch);
 }
 
 TodoList.prototype.render = function() {
@@ -95,6 +107,19 @@ TodoList.prototype.updateTasksProps = function() {
     }));
 }
 
+TodoList.prototype.getUncompletedViewedTasks = function() {
+    return this.tasks.filter(taskObj => taskObj.isViewedAndUncompleted());
+}
+
+TodoList.prototype.updateTask = function(task) {
+    const taskObj = this.tasks.find(t => t.task.id === task.id);
+
+    if (taskObj) {
+        taskObj.updateProps({...task, hidden: this.isTaskHidden(task.completed, this.props.filter)});
+    }
+}
+
+const loader = document.querySelector('.loader');
 const filter = new Filter({
     onChangeFilter: changeFilter
 });
@@ -122,24 +147,69 @@ const todoList = new TodoList({
     //     }
     // ],
     filter: filter.getFilter(),
-    tasksGetUrl: 'https://5d9969125641430014051850.mockapi.io/users/1/tasks'
+    tasksGetUrl: 'https://5d9969125641430014051850.mockapi.io/users/1/tasks',
+    onTasksUpdate: () => filter.updateProps({ itemsCount: todoList.getLength() }),
+    beforeFetch,
+    afterFetch
 });
 const todoForm = new TodoForm({
-    onSubmit: addTask
+    onSubmit: addTask,
+    onComplete: completeAllViewvedTask
 });
 
 filter.updateProps({ itemsCount: todoList.getLength() });
+
+function beforeFetch() {
+    loader.classList.add('loader--active');
+}
+
+function afterFetch() {
+    loader.classList.remove('loader--active');
+}
 
 function changeFilter(newFilter) {
     todoList.updateProps({ filter: newFilter });
     filter.updateProps({ itemsCount: todoList.getLength() });
 }
 
-function taskChangeHandler() {
-    todoList.updateTasksProps();
-    filter.updateProps({ itemsCount: todoList.getLength() });
+function udateTaskOnServer(task) {
+    return fetch(`${todoList.props.tasksGetUrl}/${task.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task)
+    })
+    .then(response => response.json())
+}
+
+function taskChangeHandler(taskObj) {
+    beforeFetch();
+
+    udateTaskOnServer(taskObj.task)
+    .then(updatedTask => todoList.updateTask(updatedTask))
+    .then(todoList.props.onTasksUpdate)
+    .then(afterFetch);
 }
 
 function addTask(task) {
     todoList.createTaskOnServer(task);
+}
+
+function completeAllViewvedTask() {
+    const tasks = todoList.getUncompletedViewedTasks(),
+        tasksFetch = tasks.map(tasksObj => udateTaskOnServer({
+            ...tasksObj.task,
+            completed: true
+        }));
+
+    beforeFetch();
+    Promise.all(tasksFetch)
+        .then(updatedTasks => {
+            updatedTasks.forEach(task => {
+                todoList.updateTask(task);
+            })
+        })
+        .then(todoList.props.onTasksUpdate)
+        .then(afterFetch);
 }
