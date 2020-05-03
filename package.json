@@ -1,0 +1,29 @@
+{
+  "name": "fe0303",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcherepakha/fe0303.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcherepakha/fe0303/issues"
+  },
+  "homepage": "https://github.com/bcherepakha/fe0303#readme",
+  "dependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "devDependencies": {
+    "sass": "^1.26.5",
+    "typescript": "^3.8.3"
+  }
+}
