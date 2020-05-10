@@ -1,4 +1,6 @@
 import { createElement, render } from '../lib/module';
+// import './sudocu';
+// import sudoku from './sudocu';
 
 type TRows = string[];
 
@@ -55,25 +57,24 @@ function getColumns( board: string ): TRows {
     return columns;
 }
 
-console.log( 'board', board );
-console.log( 'rows', getBoardRows(board) );
-console.log( 'rowGroups', getBoardRows(board).map(getBoardRowGroups) );
-console.log( 'groups', getGroups(board) );
-console.log( 'columns', getColumns(board) );
-
 const boardEl: HTMLElement = document.querySelector('.board');
 
 function renderPredefinedCell( number: string ): HTMLElement {
     return createElement('div', {className: 'board__cell'}, number);
 }
 
-function renderUndefinedCell() {
-    const input = createElement('input', {className: 'board__cell-input', type: 'text'});
+function renderUndefinedCell(numberInGroup: number, groupNumber: number, board: string): HTMLElement {
+    const input = createElement('input', {className: 'board__cell-input', type: 'text'}),
+        groupRowsNumber = Math.floor(numberInGroup / 3),
+        groupColsNumber = numberInGroup % 3,
+        firstColNumber = (groupNumber % 3)*3,
+        firstRowNumber = 3*Math.floor(groupNumber / 3),
+        helper = renderHelper(getHelper(board, groupColsNumber + firstColNumber +(firstRowNumber + groupRowsNumber)*9));
 
-    return createElement('div', {className: 'board__cell board__cell--editable', children: [input]});
+    return createElement('div', {className: 'board__cell board__cell--editable', children: [input, helper]});
 }
 
-function renderGroup( group: string ) {
+function renderGroup( group: string, groupNumber: number, board: string ) {
     const board__group = createElement('div', {className: 'board__group'}),
         elements = [];
 
@@ -81,7 +82,7 @@ function renderGroup( group: string ) {
         const number = group[i];
 
         if (number === '.') {
-            elements.push( renderUndefinedCell() );
+            elements.push( renderUndefinedCell(i, groupNumber, board) );
         } else {
             elements.push( renderPredefinedCell(number) );
         }
@@ -94,12 +95,10 @@ function renderGroup( group: string ) {
 
 function renderBoard( board: string, boardEl: HTMLElement): void {
     const groups = getGroups(board),
-        groupEls = groups.map(renderGroup);
+        groupEls = groups.map((group, groupNumber) => renderGroup(group, groupNumber, board));
 
     render(groupEls, boardEl);
 }
-
-renderBoard(board, boardEl);
 
 function renderHelper(helper: boolean[]): HTMLElement {
     return createElement('div', {
@@ -113,11 +112,34 @@ function renderHelper(helper: boolean[]): HTMLElement {
     })
 }
 
-console.log( renderHelper([true, false, false, true, true, false, true, false, true]) );
-
 function getHelper(board: string, i: number): boolean[] {
+    const colNumber = i % 9,
+        rowNumber = Math.floor(i / 9),
+        groupNumber = Math.floor(colNumber / 3) + 3*Math.floor(rowNumber / 3),
+        rows = getBoardRows(board),
+        groups = getGroups(board),
+        columns = getColumns(board),
+        row = rows[rowNumber],
+        col = columns[colNumber],
+        group = groups[groupNumber],
+        unexpectedNumbers = getNumbersFromBoard(row).concat(getNumbersFromBoard(col), getNumbersFromBoard(group));
 
+    function getNumbersFromBoard(board: string): string[] {
+        return board.replace(/\./g, '').split('');
+    }
+
+    return ["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((n:string) => !unexpectedNumbers.includes(n));
 }
 
-console.log( getHelper(board, 10) ); // [false, false, false, false, false, true, false, true, true ]
-console.log( getHelper(board, 37) ); // [true, true, false, false, false, false, true, true, true ]
+const game = {
+    board,
+    render() {
+        const {board} = this;
+
+        renderBoard(board, boardEl);
+    }
+};
+
+console.log( game );
+
+game.render();

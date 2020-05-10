@@ -75,6 +75,11 @@ $cell-width: 50px;
             display: flex;
             flex-wrap: wrap;
 
+            &--hidden
+            {
+                display: none;
+            }
+
             &-item
             {
                 flex: 1 0 33%;
