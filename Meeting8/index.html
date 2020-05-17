@@ -7,6 +7,49 @@
     <link rel="stylesheet" href="style.scss">
 </head>
 <body>
+    <form class="settings">
+        <fieldset>
+            <legend>Settings: </legend>
+            <ul class="settings__complexity-list">
+                <li class="settings__complexity-list-item">
+                    <label class="settings__complexity-label">
+                        <input type="radio" name='complexity' value='easy' class="settings__complexity-input">
+                        Easy
+                    </label>
+                </li>
+                <li class="settings__complexity-list-item">
+                    <label class="settings__complexity-label">
+                        <input checked type="radio" name='complexity' value='medium' class="settings__complexity-input">
+                        Medium
+                    </label>
+                </li>
+                <li class="settings__complexity-list-item">
+                    <label class="settings__complexity-label">
+                        <input type="radio" name='complexity' value='hard' class="settings__complexity-input">
+                        Hard
+                    </label>
+                </li>
+                <li class="settings__complexity-list-item">
+                    <label class="settings__complexity-label">
+                        <input type="radio" name='complexity' value='very-hard' class="settings__complexity-input">
+                        Very hard
+                    </label>
+                </li>
+                <li class="settings__complexity-list-item">
+                    <label class="settings__complexity-label">
+                        <input type="radio" name='complexity' value='insane' class="settings__complexity-input">
+                        Insane
+                    </label>
+                </li>
+                <li class="settings__complexity-list-item">
+                    <label class="settings__complexity-label">
+                        <input type="radio" name='complexity' value='inhuman' class="settings__complexity-input">
+                        Inhuman
+                    </label>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
     <div class="board">
         <div class="board__group">
             <div class="board__cell">1</div>

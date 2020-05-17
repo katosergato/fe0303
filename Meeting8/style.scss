@@ -100,3 +100,37 @@ $cell-width: 50px;
         }
     }
 }
+
+.settings {
+    display: flex;
+
+    width: 100%;
+    max-width: 452px;
+    margin: 20px auto;
+
+    &__complexity {
+        &-list {
+            display: flex;
+
+            flex: 1 0 auto;
+            flex-wrap: wrap;
+
+            margin: 0;
+            padding: 0;
+
+            list-style: none;
+
+            &-item {
+                flex: 1 0 30%;
+
+                &:not(:nth-child(3n)) {
+                    margin-right: 12px;
+                }
+
+                &:nth-child(n + 4) {
+                    margin-top: 12px;
+                }
+            }
+        }
+    }
+}

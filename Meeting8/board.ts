@@ -4,7 +4,7 @@ import Cell from './cell';
 
 interface IBoardProps {
     board?: string;
-    complexity?: 'easy' | 'medium' | 'hard' | 'very-hard' | 'insane' | 'inhuman';
+    complexity?: string;
 }
 
 interface IBoardState {
@@ -20,8 +20,9 @@ export default class Board {
     _state: IBoardState;
 
     static DIFFICULTIES = ['easy', 'medium', 'hard', 'very-hard', 'insane', 'inhuman'];
+    static DEFAULT_COMPLEXITY = 'medium';
     static defaultProps: IBoardProps = {
-        complexity: 'medium'
+        complexity: Board.DEFAULT_COMPLEXITY
     }
     static HELPERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -31,7 +32,26 @@ export default class Board {
         this._props = _props;
         this._boardEl = document.querySelector('.board');
 
-        const startBoard: string = _props.board || sudoku.generate(_props.complexity),
+        this.onChangeCell = this.onChangeCell.bind(this);
+
+        this.createBoard();
+    }
+
+    changeProps(newProps: IBoardProps) {
+        this._props = {
+            ...this._props,
+            ...newProps
+        }
+
+        if (!Board.DIFFICULTIES.find(difficultie => difficultie === this._props.complexity)) {
+            this._props.complexity = Board.DEFAULT_COMPLEXITY;
+        }
+
+        this.createBoard();
+    }
+
+    createBoard() {
+        const startBoard: string = this._props.board || sudoku.generate(this._props.complexity),
             candidates = sudoku.get_candidates(startBoard);
 
         this._state = {
@@ -47,7 +67,8 @@ export default class Board {
                 return new Cell({
                     id: cellNumber,
                     value: isEditable ? undefined : value,
-                    helper: isEditable ? Board.HELPERS.map(v => candidate.includes(v)) : null
+                    helper: isEditable ? Board.HELPERS.map(v => candidate.includes(v)) : null,
+                    onChange: this.onChangeCell
                 });
             }),
             groups: []
@@ -55,6 +76,34 @@ export default class Board {
 
         this.groupCells();
         this.fillBoard();
+    }
+
+    onChangeCell(id: number, newValue?: number): void {
+        const { currentBoard, startBoard } = this._state,
+            newSymbol = isNaN(newValue) ? '.' : newValue.toString(),
+            newBoard = currentBoard.slice(0, id) + newSymbol  + currentBoard.slice(id + 1),
+            candidates = sudoku.get_candidates(newBoard);
+
+        if (!candidates) {
+            return ;
+        }
+
+        this._state.cells.forEach((cell: Cell, id: number) => {
+            const value = parseInt(newBoard[id], 10),
+                isEditable = isNaN(parseInt(startBoard[id], 10)),
+                candidateRow = Math.floor(id / 9),
+                candidateCell = id % 9,
+                candidate = candidates[candidateRow][candidateCell];
+
+            cell.changeProps({
+                value: isNaN(value) ? undefined : value,
+                helper: isEditable ? Board.HELPERS.map(v => candidate.includes(v)) : null
+            });
+        });
+
+        this._state.currentBoard = newBoard;
+
+        this.render();
     }
 
     groupCells() {

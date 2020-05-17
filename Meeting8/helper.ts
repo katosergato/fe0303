@@ -21,24 +21,35 @@ export default class Helper {
         const {hidden} = this._props;
 
         return createElement('div', {
-            className: cn({
-                'board__cell-helper': true,
-                'board__cell-helper--hidden': hidden
-            }),
             children: this._items
-        })
+        });
+    }
+
+    changeProps(newProps: IHelperProps): void {
+        this._props = newProps;
+
+        this.render();
     }
 
     createItems(): HTMLElement[] {
-        return this._props.value.map((visible, i) => createElement('div', {
-            className: cn({
-                'board__cell-helper-item': true,
-                'board__cell-helper-item--disabled': !visible
-            })
-        }, i+1));
+        return this._props.value.map((visible, i) => createElement('div', {}, i+1));
     }
 
     render(): HTMLElement {
+        this._items.forEach((item: HTMLDivElement, itemNumber: number) => {
+            const visible = this._props.value[itemNumber];
+
+            item.className = cn({
+                'board__cell-helper-item': true,
+                'board__cell-helper-item--disabled': !visible
+            });
+        });
+
+        this._el.className = cn({
+            'board__cell-helper': true,
+            'board__cell-helper--hidden': this._props.hidden
+        });
+
         return this._el;
     }
 }
