@@ -12,12 +12,13 @@ export default class Settings {
     _props: ISettingsProps;
     _items: NodeList;
     _state: ISettingsState;
+    _availableComplexity: string[];
 
     constructor(props: ISettingsProps) {
-
         this._props = props;
         this._el = document.querySelector(props.selector);
         this._items = this._el.querySelectorAll(`[name='complexity']`);
+        this._availableComplexity = [];
 
         let complexity = 'medium';
 
@@ -25,6 +26,8 @@ export default class Settings {
             if (item.checked) {
                 complexity = item.value;
             }
+
+            this._availableComplexity.push(item.value);
         });
 
         this._state = {
@@ -35,6 +38,14 @@ export default class Settings {
         this._el.addEventListener('change', this.onChangeHandler);
 
         this.render();
+    }
+
+    getComplexity() {
+        return this._state.complexity;
+    }
+
+    getAvailableComplexity() {
+        return [...this._availableComplexity];
     }
 
     onChangeHandler(event: Event) {

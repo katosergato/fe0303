@@ -134,3 +134,37 @@ $cell-width: 50px;
         }
     }
 }
+
+.winner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 9*$cell-width + 2px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(156, 236, 250, .5);
+
+    &--hidden {
+        display: none;
+    }
+}
+
+.timer {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    padding: 10px 20px;
+
+    background: rgba(156, 236, 250, .5);
+}

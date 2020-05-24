@@ -5,6 +5,8 @@ import Cell from './cell';
 interface IBoardProps {
     board?: string;
     complexity?: string;
+    onWinGame?: () => void;
+    onStartGame?: () => void;
 }
 
 interface IBoardState {
@@ -12,6 +14,7 @@ interface IBoardState {
     currentBoard: string;
     cells: Cell[];
     groups: Cell[][];
+    isWin: boolean;
 }
 
 export default class Board {
@@ -71,21 +74,34 @@ export default class Board {
                     onChange: this.onChangeCell
                 });
             }),
-            groups: []
+            groups: [],
+            isWin: false
         };
 
         this.groupCells();
         this.fillBoard();
+
+        if (this._props.onStartGame) {
+            this._props.onStartGame();
+        }
     }
 
     onChangeCell(id: number, newValue?: number): void {
         const { currentBoard, startBoard } = this._state,
             newSymbol = isNaN(newValue) ? '.' : newValue.toString(),
             newBoard = currentBoard.slice(0, id) + newSymbol  + currentBoard.slice(id + 1),
-            candidates = sudoku.get_candidates(newBoard);
+            candidates = sudoku.get_candidates(newBoard),
+            isWin = newBoard.search(/\./) === -1;
 
         if (!candidates) {
             return ;
+        }
+
+        this._state.currentBoard = newBoard;
+        this._state.isWin = isWin;
+
+        if (isWin && this._props.onWinGame) {
+            this._props.onWinGame();
         }
 
         this._state.cells.forEach((cell: Cell, id: number) => {
@@ -97,11 +113,10 @@ export default class Board {
 
             cell.changeProps({
                 value: isNaN(value) ? undefined : value,
-                helper: isEditable ? Board.HELPERS.map(v => candidate.includes(v)) : null
+                helper: isEditable ? Board.HELPERS.map(v => candidate.includes(v)) : null,
+                disabled: isWin
             });
         });
-
-        this._state.currentBoard = newBoard;
 
         this.render();
     }

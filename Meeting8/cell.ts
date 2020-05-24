@@ -6,6 +6,7 @@ interface ICellProps {
     value?: number;
     helper: boolean[] | null;
     onChange?(id: number, newValue?: number): void;
+    disabled?: boolean;
 }
 
 interface ICellState {
@@ -97,6 +98,7 @@ export default class Cell {
     render() {
         if (this._input) {
             this._input.value = (this._props.value || '').toString();
+            this._input.disabled = !!this._props.disabled;
         }
 
         return this._el;
